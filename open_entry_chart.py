@@ -83,7 +83,7 @@ class OpenChart:
         search_input.send_keys(symbol)
         search_input.send_keys(Keys.ENTER)
         entry_chart_logger.info(f'Entered symbol {symbol}') 
-        WebDriverWait(self.driver, 5).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, 'button[id="header-toolbar-symbol-search"] div'), symbol.split(':')[-1]))
+        WebDriverWait(self.driver, 5).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, 'button[id="header-toolbar-symbol-search"] div'), symbol))
         sleep(1.5) # wait for the chart to load
         return True
       else:
@@ -109,6 +109,7 @@ class OpenChart:
             option.click()
             entry_chart_logger.info(f'Successfully changed the timeframe to {timeframe}!')
             return True
+      
       elif tf_button.get_attribute('aria-label') == timeframe: # if the chart's timeframe is already the desired timeframe
         entry_chart_logger.info('No need to change the timeframe as the current chart is already on that timeframe!')
         return True

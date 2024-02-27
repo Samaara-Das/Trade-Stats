@@ -35,6 +35,10 @@ if __name__ == '__main__':
         # Send each retrieved entry’s info into the indicator’s inputs
         open_chart = open_entry_chart.OpenChart(browser.driver)
         for entry in entries:
+            # open the symbol and the timeframe
+            open_chart.change_symbol(entry['symbol'])
+            open_chart.change_tframe()
+
             # open and change the indicator's settings
             open_chart.change_settings(int(entry['date']), float(entry['entry']), entry['type'], float(entry['sl']), float(entry['tp1']), float(entry['tp2']), float(entry['tp3']))
             
@@ -43,7 +47,6 @@ if __name__ == '__main__':
 
             # wait for an alert to come
             alert = get_alert_data.Alerts(browser.driver, browser.get_exits_indicator).get_alert()
-            
 
 
 
