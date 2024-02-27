@@ -25,16 +25,12 @@ alert_data_logger = logger_setup.setup_logger(__name__, logger_setup.logging.DEB
 # class
 class Alerts:
 
-  def __init__(self, drawer_indicator, screener_shortitle, driver, chart_timeframe, interval_seconds) -> None:
+  def __init__(self, driver, get_exits_indicator) -> None:
     self.driver = driver
     self.local_db = local_db.Database('')
     self.nk_db = nk_db.Post()
-    self.chart = open_entry_chart.OpenChart(self.driver)
     self.discord = send_to_discord.Discord()
-    self.drawer_indicator = drawer_indicator
-    self.screener_shortitle = screener_shortitle
-    self.chart_timeframe = chart_timeframe
-    self.interval_seconds = interval_seconds
+    self.get_exits_indicator = get_exits_indicator
     self.last_run = time()
     self.get_alert_log()
     
@@ -140,23 +136,22 @@ class Alerts:
 
   def get_alert(self):
     '''As soon as an alert comes in the Alert log or whenever it sees an alert, the alert gets deleted from the log and its message gets returned'''
+    start_time = time.time()
     while True:
       try:
-        alert_box, alert_msg = self.get_alert_box_and_msg()
-        if alert_box and alert_msg:
-          if self.remove_alert(alert_box):
-            return loads(alert_msg) if alert_msg != None else loads('{}')# the alert message is jsonified
-      except StaleElementReferenceException:
-        alert_data_logger.error('StaleElementReferenceException while reading the alert. Trying again to get alert...')
-        alert_box, alert_msg = self.get_alert_box_and_msg()
-        if alert_box and alert_msg:
-          if self.remove_alert(alert_box):
-            return loads(alert_msg) if alert_msg != None else loads('{}')# the alert message is jsonified
+        # Exit the loop if more than 10 seconds have passed
+        current_time = time.time()  
+        if current_time - start_time > 10: 
+          return ''  
+
+        # get the alert box and its message. 
+        alert_msg = self.get_alert_box_and_msg()
+        return alert_msg
       except Exception as e:
         alert_data_logger.exception('Error in reading the alert. Error:')
 
-  def get_alert_box_and_msg(self):
-    '''Returns the last alert box and its message if there is an alert. If there is no alert, it waits for one. Also, it restarts all the inactive alerts periodically. If something goes wrong, `None, None` gets returned'''
+  def get_alert_msg(self):
+    '''Returns the alert's message if there is an alert. If there is no alert, it waits for one. Also, it restarts all the inactive alerts periodically. If something goes wrong, `None` gets returned'''
     try:
       # restart all the inactive alerts every INTERVAL_MINUTES minutes (this is also done in get_alert_data.py in the method get_alert_box_and_msg())
       if time() - self.last_run > self.interval_seconds:
@@ -165,19 +160,15 @@ class Alerts:
 
       alert_boxes = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[data-name="alert-log-item"]')))
       if alert_boxes:
-        alert_box = alert_boxes[-1] # take the last alert (the oldest one)
-        alert_msg = alert_box.find_element(By.CSS_SELECTOR, 'div[class="message-PQUvhamm"]').text 
-        if not alert_box.is_displayed() and not self.scroll_to_alert(alert_box):
-          alert_data_logger.error('Failed to scroll to alert')
-          return None, None
-        return alert_box, alert_msg
-      return None, None
+        alert_msg = alert_boxes[-1].find_element(By.CSS_SELECTOR, 'div[class="message-PQUvhamm"]').text 
+        return alert_msg
+      return None
     except TimeoutException:
-      alert_data_logger.error('TimeoutException occured while waiting for an alert.')
-      return None, None
+      alert_data_logger.error('TimeoutException occurred while waiting for an alert.')
+      return None
     except Exception as e:
       alert_data_logger.exception('Error in getting the alert box and message. Error:')
-      return None, None
+      return None
   
   def remove_alert(self, alert_box):
     '''Removes the alert from the Alert log'''

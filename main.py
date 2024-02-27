@@ -1,5 +1,7 @@
 import logger_setup
 import open_tv
+import open_entry_chart
+import get_alert_data
 import local_db
 from time import time
 from time import sleep
@@ -22,7 +24,7 @@ if __name__ == '__main__':
 
         # Retrieve entries
         db = local_db.Database()
-        entries = db.get_docs('entries', db.get_unix_time(0))
+        entries = db.get_docs('entries', db.get_unix_time(30)*1000) # multiply by 1000 to convert to milliseconds because the date field in the mongodb documents is in milliseconds. 
 
         # initiate Browser
         browser = open_tv.Browser(True, INDICATOR_SHORT, INDICATOR_NAME)
@@ -30,21 +32,21 @@ if __name__ == '__main__':
         # setup the indicators, alerts etc.
         setup_check = browser.setup_tv()
 
-        # set up alerts for all the symbols
-        browser.set_bulk_alerts()
+        # Send each retrieved entry’s info into the indicator’s inputs
+        open_chart = open_entry_chart.OpenChart(browser.driver)
+        for entry in entries:
+            # open and change the indicator's settings
+            open_chart.change_settings(int(entry['date']), float(entry['entry']), entry['type'], float(entry['sl']), float(entry['tp1']), float(entry['tp2']), float(entry['tp3']))
+            
+            # set an alert
+            browser.set_alerts(int(entry['date']), float(entry['entry']), entry['type'], float(entry['sl']), float(entry['tp1']), float(entry['tp2']), float(entry['tp3']))
 
-        if setup_check and browser.init_succeeded:
-            last_run = time()
-            while True:
-                # restart all the inactive alerts every INTERVAL_MINUTES minutes (this is also done in get_alert_data.py in the method get_alert_box_and_msg()) and refresh browser
-                if time() - last_run > interval_seconds:
-                    # clear_cache()
-                    browser.alerts.restart_inactive_alerts()
-                    last_run = time()
+            # wait for an alert to come
+            alert = get_alert_data.Alerts(browser.driver, browser.get_exits_indicator).get_alert()
+            
 
-                # get entries from the alerts which come and post them
-                alert = browser.alerts.get_alert()
-                browser.alerts.post(alert, browser.indicator_visibility)
+
+
     except Exception as e:
         main_logger.exception(f'Error in main.py:')
  

@@ -21,14 +21,15 @@ class OpenChart:
   def __init__(self, driver) -> None:
     self.driver = driver
     
-  def change_indicator_settings(self, drawer_indicator, entry_time, entry_price, sl_price, tp1_price, tp2_price, tp3_price):
+  def change_indicator_settings(self, get_exits_indicator, entry_time, entry_price, entry_type, sl_price, tp1_price, tp2_price, tp3_price):
+    '''This double clicks on the Get Exits indicator to open its settings and changes its inputs'''
     try:
       # double click on the indicator so that the settings can open 
       i = 1
       while i <= 3:
         try:
-          ActionChains(self.driver).move_to_element(drawer_indicator).perform()
-          ActionChains(self.driver).double_click(drawer_indicator).perform()
+          ActionChains(self.driver).move_to_element(get_exits_indicator).perform()
+          ActionChains(self.driver).double_click(get_exits_indicator).perform()
           settings = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[data-name="indicator-properties-dialog"]')))
           break
         except Exception as e:
@@ -62,27 +63,11 @@ class OpenChart:
         inputs[i].send_keys(Keys.DELETE)
         inputs[i].send_keys(val)
 
-      entry_chart_logger.info(f'Trade Drawer\'s settings changed. Inputs: entry_time - {entry_time}, entry_price - {entry_price}, sl_price - {sl_price}, tp1_price - {tp1_price}, tp2_price - {tp2_price}, tp3_price - {tp3_price}')
+      entry_chart_logger.info(f'Trade Drawer\'s settings changed. Inputs: entry_time - {entry_time}, entry_price - {entry_price}, entry_type - {entry_type}, sl_price - {sl_price}, tp1_price - {tp1_price}, tp2_price - {tp2_price}, tp3_price - {tp3_price}')
 
       # click on submit
       self.driver.find_element(By.CSS_SELECTOR, 'button[name="submit"]').click()
-
-      # wait for the indicator to fully load so that it can take a snapshot of the new entry, sl & tp
-      start_time = time()
-      timeout = 15  # 15 seconds
-      check = False
-      sleep(2)
-      while time() - start_time <= timeout:
-        class_attr = drawer_indicator.get_attribute('class')
-        if 'Loading' not in class_attr:
-          check = True
-          entry_chart_logger.info('Trade indicator fully loaded!')
-          return True
-        else:
-          continue
-      if check == False:
-        entry_chart_logger.error('Trade indicator did not fully load.')
-        return False
+      return True
     except Exception as e:
       entry_chart_logger.exception('Failed to change the Trade Drawer\'s settings. Error:')
       return False

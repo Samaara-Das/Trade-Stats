@@ -1,7 +1,2 @@
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 13:30:28
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 13:30:36
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 15:34:36
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 15:36:23
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 15:40:57
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 15:47:42
-__main__.py __init__() INFO: You successfully connected to MongoDB! 02.26.24 16:05:59
+__main__.py <module>() INFO: *********************************************************************************** 02.27.24 13:28:46
+local_db.py __init__() INFO: You successfully connected to MongoDB! 02.27.24 13:28:47

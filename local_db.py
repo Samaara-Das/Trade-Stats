@@ -37,7 +37,7 @@ class Database:
     def get_docs(self, col: str, start_time: int, end_time = int(mktime(datetime.now().timetuple()))):
         '''Returns entries within a specific time span. `start_time` is the unix date that the entries should come after. `end_time` is the unix date that entries should come before and its default value is today'''
         return self.db[col].find({"date": 
-                                  {"$gte": start_time, "$lte": end_time }
+                                  {"$gte": start_time, "$lte": end_time*1000 } # multiply by 1000 to convert to milliseconds because the date field in the mongodb documents is in milliseconds. 
                                 })
     
     def get_unix_time(self, days_ago: int):

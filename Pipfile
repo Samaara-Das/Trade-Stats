@@ -8,6 +8,7 @@ pymongo = "*"
 python-dotenv = "*"
 selenium = "*"
 webdriver-manager = "*"
+discord-webhook = "*"
 
 [dev-packages]
 
