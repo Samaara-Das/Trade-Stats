@@ -51,12 +51,14 @@ class OpenChart:
         elif i == 1:
           val = entry_price
         elif i == 2:
-          val = sl_price
+          val = entry_type
         elif i == 3:
-          val = tp1_price
+          val = sl_price
         elif i == 4:
-          val = tp2_price
+          val = tp1_price
         elif i == 5:
+          val = tp2_price
+        elif i == 6:
           val = tp3_price
 
         ActionChains(self.driver).key_down(Keys.CONTROL, inputs[i]).send_keys('a').perform()

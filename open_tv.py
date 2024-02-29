@@ -112,9 +112,9 @@ class Browser:
       return False
     
     # make the Get exits indicator visible
-    if not self.indicator_visibility(True, self.drawer_shorttitle):
-      self.indicator_visibility(True, self.drawer_shorttitle)
-      if self.is_visible(self.drawer_shorttitle) == False:
+    if not self.indicator_visibility(True):
+      self.indicator_visibility(True)
+      if self.is_visible() == False:
         open_tv_logger.warning('Failed to make the Get exits indicator visible. The function will still continue on without exiting as this is not crucial.')
     
     #give it some time to rest
@@ -160,6 +160,7 @@ class Browser:
       i = 1
       while i <= 3:
         try:
+          self.get_exits_indicator = self.get_indicator(self.get_exits_shorttitle)
           ActionChains(self.driver).move_to_element(self.get_exits_indicator).perform()
           ActionChains(self.driver).double_click(self.get_exits_indicator).perform()
           settings = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[data-name="indicator-properties-dialog"]')))
@@ -219,7 +220,7 @@ class Browser:
       open_tv_logger.exception(f'An error happened when opening the alerts sidebar. Error: ')
       return False
 
-  def set_alerts(self, symbols, entry_time, entry_price, entry_type, sl_price, tp1_price, tp2_price, tp3_price):
+  def set_alerts(self, entry_time, entry_price, entry_type, sl_price, tp1_price, tp2_price, tp3_price):
     '''This first checks if the indicator has an error. If it does, it re-uploads it and fills in the inputs again. If an error is still there, `False` is returned. If there was no error in the first place, an alert gets created. If there was an error in creating the alert, it tries again.'''
 
     # check if the indicator indicator has an error
@@ -310,15 +311,11 @@ class Browser:
     
     return False
   
-  def indicator_visibility(self, make_visible: bool, shorttitle: str):
+  def indicator_visibility(self, make_visible: bool):
     '''Makes `shorttitle` indicator visible or hidden by clicking on the indicator's 👁️ button'''
 
     # get the indicator
-    indicator = None
-    if shorttitle == self.screener_shorttitle:
-      indicator = self.screener_indicator
-    elif shorttitle == self.drawer_shorttitle:
-      indicator = self.drawer_indicator
+    indicator = self.get_exits_indicator
 
     try:
       if indicator != None: # that means that we've found our indicator
@@ -329,44 +326,40 @@ class Browser:
           if status == 'Shown': # if status is "Hidden", that means that it is already hidden
             indicator.click()
             eye.click()
-            open_tv_logger.info(f'Successfully changed the visibility of {shorttitle} to make it invisible!')
+            open_tv_logger.info(f'Successfully changed the visibility of {self.get_exits_shorttitle} to make it invisible!')
             return True
           if status == 'Hidden': # if status is "Hidden", that means that it is already hidden
-            open_tv_logger.info(f'{shorttitle} indicator is already hidden. No need to change its visibility!')
+            open_tv_logger.info(f'{self.get_exits_shorttitle} indicator is already hidden. No need to change its visibility!')
             return True
 
         if make_visible == True: 
           if status == 'Hidden': # if status is "Shown", that means that it is already shown
             indicator.click()
             eye.click()
-            open_tv_logger.info(f'Successfully changed the visibility of {shorttitle} to make it visible!')
+            open_tv_logger.info(f'Successfully changed the visibility of {self.get_exits_shorttitle} to make it visible!')
             return True
           if status == 'Shown': # if status is "Hidden", that means that it is already hidden
-            open_tv_logger.info(f'{shorttitle} indicator is already visible. No need to change its visibility!')
+            open_tv_logger.info(f'{self.get_exits_shorttitle} indicator is already visible. No need to change its visibility!')
             return True
     except Exception as e:
-      open_tv_logger.exception(f'Error ocurred when changing the visibility of {shorttitle} to make it {"visible" if make_visible else "invisible"}. Error: ')
+      open_tv_logger.exception(f'Error ocurred when changing the visibility of {self.get_exits_shorttitle} to make it {"visible" if make_visible else "invisible"}. Error: ')
       return False
     
     return False
 
-  def is_visible(self, shorttitle: str):
+  def is_visible(self):
     '''This returns `True` if the visibility of `shorttitle` indicator is shown. Otherwise, this returns `False` if its visibility is hidden.'''
     # get the indicator
-    indicator = None
-    if shorttitle == self.screener_shorttitle:
-      indicator = self.screener_indicator
-    elif shorttitle == self.drawer_shorttitle:
-      indicator = self.drawer_indicator
+    indicator = self.get_exits_indicator
       
     # check its visibility
     try:
       if indicator != None: # that means that we've found our indicator
         status = 'Hidden' if 'disabled' in indicator.get_attribute('class') else 'Shown'
-        open_tv_logger.info(f'{shorttitle} indicator is {status}.')
+        open_tv_logger.info(f'{self.get_exits_shorttitle} indicator is {status}.')
         return status == 'Shown'
     except Exception as e:
-      open_tv_logger.exception(f'Error ocurred when checking the visibility of {shorttitle} indicator. Error:')
+      open_tv_logger.exception(f'Error ocurred when checking the visibility of {self.get_exits_shorttitle} indicator. Error:')
       return False
     
     return False

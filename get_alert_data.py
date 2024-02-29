@@ -136,11 +136,11 @@ class Alerts:
 
   def get_alert(self):
     '''As soon as an alert comes in the Alert log or whenever it sees an alert, the alert gets deleted from the log and its message gets returned'''
-    start_time = time.time()
+    start_time = time()
     while True:
       try:
         # Exit the loop if more than 10 seconds have passed
-        current_time = time.time()  
+        current_time = time()  
         if current_time - start_time > 10: 
           return ''  
 

@@ -34,12 +34,20 @@ class Database:
         
         self.db = self.client["tradingview-to-everywhere"]
 
-    def get_docs(self, col: str, start_time: int, end_time = int(mktime(datetime.now().timetuple()))):
+    def get_entries_in_timespan(self, col: str, start_time: int, end_time = int(mktime(datetime.now().timetuple()))):
         '''Returns entries within a specific time span. `start_time` is the unix date that the entries should come after. `end_time` is the unix date that entries should come before and its default value is today'''
-        return self.db[col].find({"date": 
-                                  {"$gte": start_time, "$lte": end_time*1000 } # multiply by 1000 to convert to milliseconds because the date field in the mongodb documents is in milliseconds. 
-                                })
+        try:
+            return self.db[col].find({"date": 
+                                    {"$gte": start_time, "$lte": end_time*1000 } # multiply by 1000 to convert to milliseconds because the date field in the mongodb documents is in milliseconds. 
+                                    })
+        except Exception as e:
+            local_db_logger.exception(f'Error in get_entries_in_timespan:')
+            return None
     
+    def find_docs(self, col: str, field: str, value):
+        '''Returns all entries in the `col` collection that have `field` set to `value`'''
+        return self.db[col].find({field: value})
+
     def get_unix_time(self, days_ago: int):
         '''Returns the unix time of `days_ago` days ago'''
         return int(mktime((datetime.now() - timedelta(days=days_ago)).timetuple()))

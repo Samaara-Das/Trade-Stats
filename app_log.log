@@ -1,2 +1,22 @@
-__main__.py <module>() INFO: *********************************************************************************** 02.27.24 13:28:46
-local_db.py __init__() INFO: You successfully connected to MongoDB! 02.27.24 13:28:47
+__main__.py <module>() INFO: *********************************************************************************** 02.29.24 21:45:13
+open_tv.py open_alerts_sidebar() INFO: Successfully opened the alerts sidebar! 02.29.24 21:45:20
+open_tv.py delete_all_alerts() INFO: There are no alerts. No need to delete any alerts! 02.29.24 21:45:24
+open_tv.py get_indicator() INFO: Found indicator Get Exits! 02.29.24 21:45:24
+open_tv.py indicator_visibility() INFO: Get Exits indicator is already visible. No need to change its visibility! 02.29.24 21:45:24
+local_db.py __init__() INFO: You successfully connected to MongoDB! 02.29.24 21:45:25
+open_entry_chart.py change_symbol() INFO: Entered symbol NZDCAD 02.29.24 21:45:26
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 02.29.24 21:45:28
+open_entry_chart.py change_indicator_settings() INFO: Trade Drawer's settings changed. Inputs: entry_time - 1708988400000, entry_price - 0.83332, entry_type - Sell, sl_price - 0.8378, tp1_price - 0.82884, tp2_price - 0.82436, tp3_price - 0.81988 02.29.24 21:45:33
+open_tv.py is_no_error() ERROR: There is an error in Get Exits. 02.29.24 21:45:45
+open_tv.py set_alerts() ERROR: indicator had an error. Could not set an alert for this tab. Trying to reupload indicator 02.29.24 21:45:45
+open_tv.py reupload_indicator() INFO: The Get Exits indicator is on the chart after re-uploading it! 02.29.24 21:45:48
+open_tv.py get_indicator() INFO: Found indicator Get Exits! 02.29.24 21:45:48
+open_tv.py change_settings() INFO: Settings changed. Inputs: entry_time - 1708988400000, entry_price - 0.83332, entry_type - Sell, sl_price - 0.8378, tp1_price - 0.82884, tp2_price - 0.82436, tp3_price - 0.81988 02.29.24 21:45:52
+open_tv.py is_no_error() ERROR: There is an error in Get Exits. 02.29.24 21:45:57
+open_tv.py set_alerts() ERROR: Error is still there in the indicator. Cannot set an alert for the indicator. Exiting function. 02.29.24 21:45:57
+open_entry_chart.py change_symbol() INFO: Entered symbol CADJPY 02.29.24 21:45:57
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 02.29.24 21:45:59
+open_entry_chart.py change_indicator_settings() INFO: Trade Drawer's settings changed. Inputs: entry_time - 1709020800000, entry_price - 111.381, entry_type - Sell, sl_price - 111.626, tp1_price - 111.136, tp2_price - 110.891, tp3_price - 110.646 02.29.24 21:46:04
+open_tv.py is_no_error() INFO: There is no error in Get Exits! 02.29.24 21:46:04
+open_tv.py click_create_alert() INFO: Clicked on "Create"! 02.29.24 21:46:05
+open_tv.py click_create_alert() INFO: No error occured while saving alert! 02.29.24 21:46:07
