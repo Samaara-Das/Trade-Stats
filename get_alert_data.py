@@ -25,55 +25,39 @@ alert_data_logger = logger_setup.setup_logger(__name__, logger_setup.logging.DEB
 # class
 class Alerts:
 
-  def __init__(self, driver, get_exits_indicator) -> None:
+  def __init__(self, driver, open_chart, get_exits_indicator, interval_mins) -> None:
     self.driver = driver
-    self.local_db = local_db.Database('')
-    self.nk_db = nk_db.Post()
-    self.discord = send_to_discord.Discord()
+    self.open_chart = open_chart
     self.get_exits_indicator = get_exits_indicator
+    self.interval_seconds = interval_mins * 60
     self.last_run = time()
     self.get_alert_log()
     
-  def post(self, msg, screener_visibility):
-    '''This goes through every entry in `msg` and takes a snapshot of those entries and posts them to Nk uncle's database, our remote database & Discord'''
+  def post(self):
+    '''This waits for the indicator to load, take's a snapshot of the chart, grabs its link and returns it'''
     try:
-      if not screener_visibility(False, self.screener_shortitle): # hide the screener indicator with the passed in function
-        alert_data_logger.warning('Failed to hide the screener indicator but still continuing to post about entries')
-    
-      for key, value in msg.items(): # go over every json field in this specific alert message
-        try:
-          # get all the data from the message
-          timeframe = value['timeframe']
-          entry_time = datetime.fromtimestamp(float(value['entryTime'])).strftime('%Y-%m-%d %H:%M')
-          entry_price = value['entryPrice']
-          sl_price = value['slPrice']
-          tp1_price = value['tp1Price']
-          tp2_price = value['tp2Price']
-          tp3_price = value['tp3Price']
-          direction = value['direction']
-
-          # go to that specific entry's symbol and its timeframe. Then it inputs all the entry info into the Trade Drawer indicator
-          if not self.chart.change_symbol(key):
-            alert_data_logger.error(f'Error in changing the symbol to {key}. Going to next symbol.')
-            continue
-          if not self.chart.change_tframe(self.chart_timeframe):
-            alert_data_logger.error(f'Error in changing the timeframe to {timeframe}. Going to next symbol.')
-            continue
-          if not self.chart.change_indicator_settings(self.drawer_indicator, entry_time, entry_price, sl_price, tp1_price, tp2_price, tp3_price):
-            alert_data_logger.error(f'Error in changing the Trade Drawer indicator\'s settings. Going to next symbol.')
-            continue
-
-          # take a snapshot of the entry's chart, create a discord message and send it to Discord. Then, send all the entry's info to my database and Nishant uncle's database
-          chart_link = self.chart.save_chart_img() 
-          category = symbol_category(key)
-          content = f"{direction} in {key} at {entry_price}. TP1: {tp1_price} TP2: {tp2_price} TP3: {tp3_price} SL: {sl_price} Link: {chart_link if chart_link != False else ''}"
-          self.discord.create_msg(category, content) 
-          self.send_to_db(value['type'], direction, key, timeframe, entry_price, tp1_price, tp2_price, tp3_price, sl_price, chart_link, content, entry_time, category, '')
-        except Exception as e:
-          alert_data_logger.exception(f'Error in posting an entry. Continuing to next entry. Error:')
+      # wait for the indicator to fully load so that a snapshot can be taken
+      start_time = time()
+      timeout = 15  # 15 seconds
+      check = False
+      sleep(2)
+      while time() - start_time <= timeout:
+        class_attr = self.get_exits_indicator.get_attribute('class')
+        if 'Loading' not in class_attr:
+          check = True
+          alert_data_logger.info('Get Exits indicator fully loaded!')
+          break
+        else:
           continue
+      if check == False:
+        alert_data_logger.error('Get Exits indicator did not fully load.')
+        return False
+
+      # Take a snapshot of the exit
+      chart_link = self.open_chart.save_chart_img() 
+      return chart_link
     except Exception as e:
-      alert_data_logger.exception('Error in posting an entry. Continuing to next entry. Error:')
+      alert_data_logger.exception('Error in posting an entry. Error:')
 
   def restart_inactive_alerts(self):
     '''Restarts all the inactive alerts by going to the settings and clicking on "Restart all inactive". Then it will click "Yes" on the popup which comes to confirm the restarting of the alerts.'''
@@ -139,14 +123,17 @@ class Alerts:
     start_time = time()
     while True:
       try:
-        # Exit the loop if more than 10 seconds have passed
+        # Exit the loop if more than 15 seconds have passed
         current_time = time()  
-        if current_time - start_time > 10: 
-          return ''  
+        if current_time - start_time > 15: 
+          return loads('{}')  
 
-        # get the alert box and its message. 
-        alert_msg = self.get_alert_box_and_msg()
-        return alert_msg
+        # get the alert message. 
+        alert_msg = self.get_alert_msg()
+        if not alert_msg: # if an error has occurred, continue with the next iteration of the loop
+          continue
+
+        return loads(alert_msg)
       except Exception as e:
         alert_data_logger.exception('Error in reading the alert. Error:')
 
@@ -162,13 +149,13 @@ class Alerts:
       if alert_boxes:
         alert_msg = alert_boxes[-1].find_element(By.CSS_SELECTOR, 'div[class="message-PQUvhamm"]').text 
         return alert_msg
-      return None
+      return False
     except TimeoutException:
       alert_data_logger.error('TimeoutException occurred while waiting for an alert.')
-      return None
+      return False
     except Exception as e:
       alert_data_logger.exception('Error in getting the alert box and message. Error:')
-      return None
+      return False
   
   def remove_alert(self, alert_box):
     '''Removes the alert from the Alert log'''

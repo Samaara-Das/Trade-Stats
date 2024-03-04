@@ -15,3 +15,16 @@
 7. `START_FRESH` is like an on/off switch for starting fresh, deleting all alerts and setting up new alerts OR just opening TradingView, keeping the pre-existing alerts and waiting for alerts to come. If it's `True`, the application will open TradingView, delete all the alerts and start setting up all 260 alerts again. If it's `False`, the application will open TradingView, NOT delete the alerts but instead keep all the alerts that were made when the application was previously run. This variable was created so that I could do 2 things:
     - When I leave the application running, come back in the morning to find it frozen and find alerts in the Alerts log that are unread by the application, I would like to re-start the application and keep the alerts that were made when it ran previously without deleting all the alerts and therefore, keeping the alerts in the Alerts log. So, when I run the application with `START_FRESH` set to `False`, the application won't delete all the alerts, read the unread alerts that came when it was previously running and wait for new alerts.
     - Sometimes, when I think I need to start fresh, delete all the alerts and make new ones, I can set `START_FRESH` set to `True`.
+
+8. `INTERVAL_MINUTES` has to be set to the number of minutes Python should wait until it restarts all the inactive alerts
+
+### For resources/categories.py
+1. `CURRENCIES_WEBHOOK_NAME` should be named "Currencies". `CURRENCIES_WEBHOOK_LINK` should be the webhook link of the "exits" channel under the CURRENCIES category.
+
+2. `US_STOCKS_WEBHOOK_NAME` should be named "US Stocks". `US_STOCKS_WEBHOOK_LINK` should be the webhook link of the "exits" channel under the US STOCKS category.
+
+3. `INDIAN_STOCKS_WEBHOOK_NAME` should be named "Indian Stocks". `INDIAN_STOCKS_WEBHOOK_LINK` should be the webhook link of the "exits" channel under the INDIAN STOCKS category.
+
+4. `CRYPTO_WEBHOOK_NAME` should be named "Crypto". `CRYPTO_WEBHOOK_LINK` should be the webhook link of the "exits" channel under the CRYPTO category.
+
+5. `INDICES_WEBHOOK_NAME` should be named "Indices". `INDICES_WEBHOOK_LINK` should be the webhook link of the "exits" channel under the INDICES category.

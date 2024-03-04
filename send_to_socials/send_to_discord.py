@@ -1,7 +1,7 @@
 '''
 Sends messages to discord webhooks.
 
-if you have to create a webhook url, do this:
+To create a webhook url, do this:
 go to a discord channel -> Edit channel -> Integrations -> Webhooks -> New Webhook
 '''
 import logger_setup 

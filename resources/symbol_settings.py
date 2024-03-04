@@ -19,12 +19,17 @@ from .categories import *
 symbol_logger = logger_setup.setup_logger(__name__, logger_setup.logging.DEBUG)
 
 # this is where all the symbols are stored for every category
+# Indian stocks open Monday at 9:15 am IST and close on Friday at 3:35 pm
+# The Forex market opens on Sunday at 3:30 am IST and closes on Friday at 3:30 am IST
+# Crypto is open 24/7
+# US stocks open on Monday at 8:00 pm IST and close on Friday at 2:30 am IST
+# Indices - GDAXI (00:15 - 21:00 UTC), FCHI (01:00 - 23:59 UTC+2)
 main_symbols = {
     CURRENCIES_WEBHOOK_NAME: ['OANDA:GBPAUD', 'OANDA:AUDJPY', 'OANDA:EURCAD', 'OANDA:EURGBP', 'OANDA:USDCHF', 'OANDA:AUDNZD', 'OANDA:XAUUSD', 'OANDA:WTIUSD', 'OANDA:EURNZD', 'OANDA:USDJPY', 'OANDA:NZDJPY', 'OANDA:GBPUSD', 'OANDA:AUDCAD', 'OANDA:EURJPY', 'OANDA:GBPNZD', 'OANDA:GBPJPY', 'OANDA:EURUSD', 'OANDA:EURCHF', 'OANDA:GBPCAD', 'OANDA:AUDUSD', 'OANDA:XAGUSD', 'OANDA:NZDUSD', 'OANDA:EURAUD', 'OANDA:CADCHF', 'OANDA:CHFJPY', 'OANDA:GBPCHF', 'OANDA:NZDCHF', 'OANDA:CADJPY', 'OANDA:USDCAD', 'OANDA:NZDCAD'],
 
     CRYPTO_WEBHOOK_NAME: ['BINANCE:BTCUSDT', 'BINANCE:BCHBTC', 'BINANCE:DOGEUSDT', 'BINANCE:TRXBTC', 'BINANCE:UNIUSDT', 'BINANCE:LTCUSDT', 'BINANCE:LTCBTC', 'BINANCE:BCHUSDT', 'BINANCE:ETHUSDT', 'BINANCE:XRPUSDT', 'BINANCE:LINKBTC', 'BINANCE:XRPBTC', 'BINANCE:TRXUSDT', 'BINANCE:XLMUSDT', 'BINANCE:ETHBTC', 'BINANCE:NEOUSDT', 'BINANCE:EOSUSDT', 'BINANCE:EOSBTC', 'BINANCE:LINKUSDT'],
 
-    INDICES_WEBHOOK_NAME: ['RUT', 'SNSX50', 'GDAXI', 'SENSEX', 'VIX', 'NIFTY', 'SMLCAP', 'MIDCAP', 'DJI', 'FCHI', 'SMLSEL', 'FTSE', 'BANKNIFTY', 'CNXMIDCAP', 'SPX', 'MIDSEL', 'IXIC', 'LRGCAP'],
+    INDICES_WEBHOOK_NAME: ['TVC:RUT', 'BSE:SNSX50', 'SPREADEX:GDAXI', 'BSE:SENSEX', 'TVC:VIX', 'NSE:NIFTY', 'BSE:SMLCAP', 'BSE:MIDCAP', 'TVC:DJI', 'FCHI', 'SMLSEL', 'FTSE', 'BANKNIFTY', 'CNXMIDCAP', 'SPX', 'MIDSEL', 'IXIC', 'LRGCAP'],
 
     INDIAN_STOCKS_WEBHOOK_NAME: ['DEVYANI', 'MMTC', 'PRAJIND', 'PTC', 'JUBLFOOD', 'NIACL', 'SIEMENS', 'TVTODAY', 'TRENT', 'M_M', 'BAYERCROP', 'ZENSARTECH', 'MAHABANK', 'MAHSEAMLES', 'ABCAPITAL', 'PRESTIGE', 'BAJAJFINSV', 'SCHNEIDER', 'RELIANCE', 'MASTEK', 'VENKEYS', 'PVR', 'CHOLAFIN', 'SYMPHONY', 'QUESS', 'COLPAL', 'ACC', 'MUTHOOTFIN', 'NFL', 'PETRONET', 'KEC', 'VAKRANGEE', 'SCI', 'CYIENT', 'PGHH', 'UPL', 'THYROCARE', 'SIS', 'SUNPHARMA', 'MRF', 'FCSSOFT', 'SONATSOFTW', 'COFORGE', 'MARUTI', 'JUBLINDS', 'SJVN', 'CRISIL', 'DABUR', 'ITC', 'MOTHERSON', 'BALKRISIND', 'COALINDIA', 'LTI', 'PAGEIND', 'RBLBANK', 'LICHSGFIN', 'MGL', 'AJANTPHARM', 'TATASTEEL', 'NESTLEIND', 'EQUITASBNK', 'BRITANNIA', 'UNIONBANK', 'KAJARIACER', 'VIKASECO', 'AIAENG', 'KPRMILL', 'SBILIFE', 'APARINDS', 'ESSENTIA', 'SUNTV', 'WABCOINDIA', 'RAMCOCEM', 'ASHOKLEY', 'RCF', 'GRANULES', 'CANBK', 'TITAN', 'MIDHANI', 'BLUESTARCO', 'KANSAINER', 'MCX', 'HCC', 'APOLLOTYRE', 'TEXRAIL', 'PRSMJOHNSN', 'JINDALSTEL', 'BANKINDIA', 'BERGEPAINT', 'BAJFINANCE', 'HINDPETRO', 'NCC', 'JKCEMENT', 'KOTAKBANK', 'THERMAX', 'AMBUJACEM', 'MOIL', 'JPASSOCIAT', 'PFC', 'SANOFI', 'AUROPHARMA', 'UCOBANK', 'IFCI', 'RALLIS', 'HATHWAY', 'TV18BRDCST', 'KPITTECH', 'MARICO', 'BEL', 'ABBOTINDIA', 'CREDITACC', 'PERSISTENT', 'TATACOFFEE', 'DMART', 'PNB', 'WHIRLPOOL', 'WELCORP', 'IOC', 'NAUKRI', 'KSCL', 'UJJIVAN', 'MANAPPURAM', 'BANKBARODA', 'POLYCAB', 'APOLLOHOSP', 'JSWENERGY', 'INDUSINDBK', 'LUPIN', 'VEDL', 'JKLAKSHMI', 'JPPOWER', 'STAR', 'KRBL', 'BHARTIARTL', 'TATAPOWER', 'ABFRL', 'WESTLIFE', 'CARBORUNIV', 'PFIZER', 'NETWORK18', 'TATACOMM', 'IIFL', 'ICICIBANK', 'ADANIENT', 'ABB', 'VIPIND', 'SKFINDIA', 'TVSMOTOR', 'WOCKPHARMA', 'INFIBEAM', 'SBICARD', 'ADANIENSOL', 'BOSCHLTD', 'JUSTDIAL', 'MAHINDCIE', 'HDFCBANK', 'BHEL', 'GICRE', 'AUBANK', 'LALPATHLAB', 'BPCL', 'TATAMOTORS', 'WIPRO', 'HONASA', 'JMFINANCIL', 'SOLARINDS', 'ANGELONE', 'RECLTD', 'CIPLA', 'BATAINDIA', 'GODFRYPHLP', 'IRB', 'APLAPOLLO', 'ASTRAL', 'DEEPAKNTR', 'SUPRAJIT', 'BANDHANBNK', 'YESBANK', 'TECHM', 'ADANIPOWER', 'KARURVYSYA', 'ORIENTCEM', 'TATAMTRDVR', 'MPHASIS', 'TORNTPHARM', 'ZEEL', 'BHARATFORG', 'COROMANDEL', 'KTKBANK', 'ULTRACEMCO', 'NBCC', '3MINDIA', 'CUMMINSIND', 'TEAMLEASE', 'BIOCON', 'SOUTHBANK', 'AXISBANK', 'SCHAEFFLER', 'LT', 'JSWSTEEL', 'DLF', 'GM', 'SWANENERGY', 'UBL', 'MFSL', 'SPARC', 'TATAELXSI', 'BAJAJ_AUTO', 'NRBBEARING', 'RELCAPITAL', 'SYNGENE', 'LTTS', 'WELSPUNLIV', 'SRTRANS_RE', 'ONGC', 'UFLEX', 'IRCON', 'ATGL', 'VSTIND', 'TORNTPOWER', 'SUZLON', 'ADANIPORTS', 'CENTRALBK', 'INDIGO', 'NTPC', 'VRLLOG', 'DIVISLAB', 'SHREECEM', 'ASIANPAINT', 'VBL', 'RATNAMANI', 'SAIL', 'AIRTELPP', 'DALBHARAT', 'NBVENTURES', 'DIXON', 'VAIBHAVGBL', 'IDFCFIRSTB', 'PIDILITIND', 'NATIONALUM', 'GAIL', 'DELHIVERY', 'VGUARD', 'BDL', 'LINDEINDIA', 'CONCOR', 'MHRIL', 'NOCIL', 'NHPC', 'AWL', 'ALKEM', 'SMLISUZU', 'PIIND', 'ZYDUSWELL', 'CGPOWER', 'GMDCLTD', 'TVVISION', 'POWERGRID', 'TATACHEM', 'TRIDENT', 'TIMKEN', 'ADANIGREEN', 'BAJAJHLDNG', 'TATAINVEST', 'BSE', 'OBEROIRLTY', 'IBREALEST', 'MRPL'],
 
@@ -43,7 +48,7 @@ symbol_set = {
 # this is a dictionary whose keys are the symbols and their values are the categories
 symbol_categories = {}
 for category, symbols in main_symbols.items():
-    symbol_categories.update({symbol: category for symbol in symbols})  # Map each symbol to its category in symbol_categories
+    symbol_categories.update({symbol if ':' not in symbol else symbol.split(':')[-1]: category for symbol in symbols})  # Each key will be a symbol without the exchange and the value will be its categor
 
 
 def fill_symbol_set(symbol_inputs: int):
@@ -64,7 +69,7 @@ def fill_symbol_set(symbol_inputs: int):
 
 def symbol_category(symbol):
     '''
-    This function returns the symbol category. It retrieves the category of `symbol` (the category can be a US stock, forex pair, crypto pair, etc.)
+    This function returns the symbol category. It retrieves the category of `symbol` (the category can be a US stock, forex pair, crypto pair, etc.). `symbol` must be a symbol name without the exchange. 
     '''
     return symbol_categories.get(symbol, None)
 

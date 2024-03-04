@@ -1,22 +1,58 @@
-__main__.py <module>() INFO: *********************************************************************************** 02.29.24 21:45:13
-open_tv.py open_alerts_sidebar() INFO: Successfully opened the alerts sidebar! 02.29.24 21:45:20
-open_tv.py delete_all_alerts() INFO: There are no alerts. No need to delete any alerts! 02.29.24 21:45:24
-open_tv.py get_indicator() INFO: Found indicator Get Exits! 02.29.24 21:45:24
-open_tv.py indicator_visibility() INFO: Get Exits indicator is already visible. No need to change its visibility! 02.29.24 21:45:24
-local_db.py __init__() INFO: You successfully connected to MongoDB! 02.29.24 21:45:25
-open_entry_chart.py change_symbol() INFO: Entered symbol NZDCAD 02.29.24 21:45:26
-open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 02.29.24 21:45:28
-open_entry_chart.py change_indicator_settings() INFO: Trade Drawer's settings changed. Inputs: entry_time - 1708988400000, entry_price - 0.83332, entry_type - Sell, sl_price - 0.8378, tp1_price - 0.82884, tp2_price - 0.82436, tp3_price - 0.81988 02.29.24 21:45:33
-open_tv.py is_no_error() ERROR: There is an error in Get Exits. 02.29.24 21:45:45
-open_tv.py set_alerts() ERROR: indicator had an error. Could not set an alert for this tab. Trying to reupload indicator 02.29.24 21:45:45
-open_tv.py reupload_indicator() INFO: The Get Exits indicator is on the chart after re-uploading it! 02.29.24 21:45:48
-open_tv.py get_indicator() INFO: Found indicator Get Exits! 02.29.24 21:45:48
-open_tv.py change_settings() INFO: Settings changed. Inputs: entry_time - 1708988400000, entry_price - 0.83332, entry_type - Sell, sl_price - 0.8378, tp1_price - 0.82884, tp2_price - 0.82436, tp3_price - 0.81988 02.29.24 21:45:52
-open_tv.py is_no_error() ERROR: There is an error in Get Exits. 02.29.24 21:45:57
-open_tv.py set_alerts() ERROR: Error is still there in the indicator. Cannot set an alert for the indicator. Exiting function. 02.29.24 21:45:57
-open_entry_chart.py change_symbol() INFO: Entered symbol CADJPY 02.29.24 21:45:57
-open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 02.29.24 21:45:59
-open_entry_chart.py change_indicator_settings() INFO: Trade Drawer's settings changed. Inputs: entry_time - 1709020800000, entry_price - 111.381, entry_type - Sell, sl_price - 111.626, tp1_price - 111.136, tp2_price - 110.891, tp3_price - 110.646 02.29.24 21:46:04
-open_tv.py is_no_error() INFO: There is no error in Get Exits! 02.29.24 21:46:04
-open_tv.py click_create_alert() INFO: Clicked on "Create"! 02.29.24 21:46:05
-open_tv.py click_create_alert() INFO: No error occured while saving alert! 02.29.24 21:46:07
+__main__.py <module>() INFO: *********************************************************************************** 03.04.24 17:49:34
+open_tv.py open_alerts_sidebar() INFO: The alerts sidebar is already open! 03.04.24 17:49:41
+open_tv.py delete_all_alerts() INFO: There are no alerts. No need to delete any alerts! 03.04.24 17:49:44
+open_tv.py get_indicator() INFO: Found indicator Get Exits! 03.04.24 17:49:44
+open_tv.py indicator_visibility() INFO: Get Exits indicator is already visible. No need to change its visibility! 03.04.24 17:49:44
+__main__.py <module>() INFO: Setup Successful 03.04.24 17:49:45
+local_db.py __init__() INFO: You successfully connected to MongoDB! 03.04.24 17:49:46
+local_db.py get_entries_in_timespan() INFO: Retrieving entries from Indian Stocks collection between 24-02-23 17:49 and 24-03-04 17:49 03.04.24 17:49:46
+open_entry_chart.py change_symbol() INFO: Entered symbol JMFINANCIL 03.04.24 17:50:06
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 03.04.24 17:50:08
+open_entry_chart.py get_indicator() INFO: Found indicator Get Exits! 03.04.24 17:50:10
+open_entry_chart.py change_indicator_settings() INFO: Get Exits's settings changed. Inputs: entry_time - 1708937100000, entry_price - 101.9, entry_type - Sell, sl_price - 106.5, tp1_price - 97.3, tp2_price - 92.7, tp3_price - 88.1 03.04.24 17:50:13
+open_tv.py is_no_error() INFO: There is no error in Get Exits! 03.04.24 17:50:13
+open_tv.py click_create_alert() INFO: Clicked on "Create"! 03.04.24 17:50:14
+open_tv.py click_create_alert() INFO: No error occured while saving alert! 03.04.24 17:50:17
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:50:27
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:50:37
+open_tv.py delete_all_alerts() INFO: All alerts have been sucessfully deleted! 03.04.24 17:50:41
+open_entry_chart.py change_symbol() INFO: Entered symbol WESTLIFE 03.04.24 17:50:56
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 03.04.24 17:50:58
+open_entry_chart.py get_indicator() INFO: Found indicator Get Exits! 03.04.24 17:50:59
+open_entry_chart.py change_indicator_settings() INFO: Get Exits's settings changed. Inputs: entry_time - 1708940700000, entry_price - 794.9, entry_type - Buy, sl_price - 776.05, tp1_price - 813.75, tp2_price - 832.6, tp3_price - 851.45 03.04.24 17:51:03
+open_tv.py is_no_error() INFO: There is no error in Get Exits! 03.04.24 17:51:03
+open_tv.py click_create_alert() INFO: Clicked on "Create"! 03.04.24 17:51:04
+open_tv.py click_create_alert() INFO: No error occured while saving alert! 03.04.24 17:51:06
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:51:16
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:51:26
+open_tv.py delete_all_alerts() INFO: All alerts have been sucessfully deleted! 03.04.24 17:51:31
+open_entry_chart.py change_symbol() INFO: Entered symbol DELHIVERY 03.04.24 17:53:19
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 03.04.24 17:53:21
+open_entry_chart.py get_indicator() INFO: Found indicator Get Exits! 03.04.24 17:53:23
+open_entry_chart.py change_indicator_settings() INFO: Get Exits's settings changed. Inputs: entry_time - 1709005500000, entry_price - 458.5, entry_type - Buy, sl_price - 452.95, tp1_price - 464.05, tp2_price - 469.6, tp3_price - 475.15 03.04.24 17:53:26
+open_tv.py is_no_error() INFO: There is no error in Get Exits! 03.04.24 17:53:26
+open_tv.py click_create_alert() INFO: Clicked on "Create"! 03.04.24 17:53:27
+open_tv.py click_create_alert() INFO: No error occured while saving alert! 03.04.24 17:53:29
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:53:40
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:53:50
+open_tv.py delete_all_alerts() INFO: All alerts have been sucessfully deleted! 03.04.24 17:53:54
+open_entry_chart.py change_symbol() INFO: Entered symbol IIFL 03.04.24 17:54:02
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 03.04.24 17:54:05
+open_entry_chart.py get_indicator() INFO: Found indicator Get Exits! 03.04.24 17:54:06
+open_entry_chart.py change_indicator_settings() INFO: Get Exits's settings changed. Inputs: entry_time - 1709005500000, entry_price - 614.0, entry_type - Buy, sl_price - 561.45, tp1_price - 666.55, tp2_price - 719.1, tp3_price - 771.65 03.04.24 17:54:09
+open_tv.py is_no_error() INFO: There is no error in Get Exits! 03.04.24 17:54:09
+open_tv.py click_create_alert() INFO: Clicked on "Create"! 03.04.24 17:54:10
+open_tv.py click_create_alert() INFO: No error occured while saving alert! 03.04.24 17:54:12
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:54:22
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:54:32
+open_tv.py delete_all_alerts() INFO: All alerts have been sucessfully deleted! 03.04.24 17:54:37
+open_entry_chart.py change_symbol() INFO: Entered symbol WESTLIFE 03.04.24 17:56:21
+open_entry_chart.py change_tframe() INFO: No need to change the timeframe as the current chart is already on that timeframe! 03.04.24 17:56:23
+open_entry_chart.py get_indicator() INFO: Found indicator Get Exits! 03.04.24 17:56:24
+open_entry_chart.py change_indicator_settings() INFO: Get Exits's settings changed. Inputs: entry_time - 1708940700000, entry_price - 794.9, entry_type - Buy, sl_price - 776.05, tp1_price - 813.75, tp2_price - 832.6, tp3_price - 851.45 03.04.24 17:56:27
+open_tv.py is_no_error() INFO: There is no error in Get Exits! 03.04.24 17:56:27
+open_tv.py click_create_alert() INFO: Clicked on "Create"! 03.04.24 17:56:28
+open_tv.py click_create_alert() INFO: No error occured while saving alert! 03.04.24 17:56:30
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:56:41
+get_alert_data.py get_alert_msg() ERROR: TimeoutException occurred while waiting for an alert. 03.04.24 17:56:51
+open_tv.py delete_all_alerts() INFO: All alerts have been sucessfully deleted! 03.04.24 17:56:55

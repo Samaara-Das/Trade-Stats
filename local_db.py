@@ -4,6 +4,7 @@ This module is for everything related to the MongoDb database
 
 import pymongo
 import logger_setup
+import pytz
 from datetime import datetime, timedelta
 from time import mktime
 from pymongo.mongo_client import MongoClient
@@ -37,17 +38,26 @@ class Database:
     def get_entries_in_timespan(self, col: str, start_time: int, end_time = int(mktime(datetime.now().timetuple()))):
         '''Returns entries within a specific time span. `start_time` is the unix date that the entries should come after. `end_time` is the unix date that entries should come before and its default value is today'''
         try:
+            local_db_logger.info(f'Retrieving entries from {col} collection between {self.unix_to_readable(start_time)} and {self.unix_to_readable(end_time)}')
             return self.db[col].find({"date": 
-                                    {"$gte": start_time, "$lte": end_time*1000 } # multiply by 1000 to convert to milliseconds because the date field in the mongodb documents is in milliseconds. 
+                                    {"$gte": start_time*1000, "$lte": end_time*1000 } # multiply by 1000 to convert to milliseconds because the date field in the mongodb documents is in milliseconds. 
                                     })
         except Exception as e:
             local_db_logger.exception(f'Error in get_entries_in_timespan:')
-            return None
+            return []
     
     def find_docs(self, col: str, field: str, value):
         '''Returns all entries in the `col` collection that have `field` set to `value`'''
-        return self.db[col].find({field: value})
+        return self.db[col].find({field: value})           
 
     def get_unix_time(self, days_ago: int):
         '''Returns the unix time of `days_ago` days ago'''
         return int(mktime((datetime.now() - timedelta(days=days_ago)).timetuple()))
+    
+    def unix_to_readable(self, unix_timestamp):
+        '''converts a unix timestamp to nicely formatted string in the Asia/Kolkata timezone'''
+        timestamp_datetime = datetime.utcfromtimestamp(unix_timestamp) # Convert the Unix timestamp to a datetime object
+        timezone = pytz.timezone('Asia/Kolkata') # Convert UTC to Asia/Kolkata timezone
+        timestamp_datetime_kolkata = timestamp_datetime.replace(tzinfo=pytz.utc).astimezone(timezone) # Format the datetime object into a short, readable string
+        readable_format = timestamp_datetime_kolkata.strftime('%y-%m-%d %H:%M')
+        return readable_format
