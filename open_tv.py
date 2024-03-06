@@ -53,6 +53,7 @@ def symbol_sublist_gen():
 class Browser:
 
   def __init__(self, keep_open: bool, ind_shorttitle: str, ind_name: str) -> None:
+    self.init_succeeded = False
     chrome_options = Options() 
     chrome_options.add_experimental_option("detach", keep_open)
     chrome_options.add_argument('--profile-directory=Profile 2')
@@ -70,6 +71,16 @@ class Browser:
       return True
     except WebDriverException:
       open_tv_logger.exception(f'Cannot open this url: {url}. Error: ')
+      return False 
+    
+  def close_browser(self):
+    '''This closes browser. Return `True` if it is successful otherwise `False`'''
+    try:
+      self.driver.close()
+      open_tv_logger.info('Closed browser successfully!')
+      return True
+    except WebDriverException:
+      open_tv_logger.exception(f'Failed to close browser. Error: ')
       return False 
 
   def setup_tv(self):
