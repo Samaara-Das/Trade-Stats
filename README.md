@@ -1,3 +1,6 @@
+# Note
+This application won't work anymore. To use trade stats, run the [[TradingView To Everywhere application](https://github.com/araamas/Tradingview-to-Everywhere)] because it's integrated inside TradingView To Everywhere.
+
 # Trade Stats
 
 1. the Get Exits indicator should be on the Exits layout on TradingView
